@@ -2,10 +2,26 @@ import random
 import string
 import time
 from datetime import date, datetime
+from os import path
 
-from openpyxl import load_workbook
+from openpyxl import Workbook, load_workbook
 
 chars=''
+
+
+if path.exists('db.xlsx'):
+    pass
+
+else:
+    wb = Workbook()
+    ws =  wb.active
+    ws.title = "KAYIT"
+    ws.cell(row = 1 ,column = 1).value = "KAYIT TARİHİ"
+    ws.cell(row = 1 ,column = 2).value = "ŞİFRENİN KULLANILDIĞI YER"
+    ws.cell(row = 1 ,column = 3).value = "ÜRETİLEN ŞİFRE"
+
+    wb.save('db.xlsx')
+    row = ws.max_row+1
 
 password_place=input("şifreyi kullanacağın yer?")
 while True:
