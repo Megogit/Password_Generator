@@ -7,8 +7,11 @@ from os import path
 from openpyxl import Workbook, load_workbook
 
 chars = ''
-
+rpassword=[]
+sizet= 0
+generated_password=''
 try:
+
 
     if path.exists('db.xlsx'):
         pass
@@ -27,7 +30,7 @@ try:
     password_place = input("şifreyi kullanacağın yer?")
     while True:
         try:
-            sizet = int(input("şifre kaç haneli olacak ?"))
+            size_u = int(input("şifre kaç haneli olacak ?"))
             break
         except:
             print("lütfen sayı değeri giriniz")
@@ -62,23 +65,41 @@ try:
 
 
 
+    if upper_case == 'y':
+        rpassword.append( random.choice(string.ascii_uppercase))
+    if lower_case == 'y':
+        rpassword.append(random.choice(string.ascii_lowercase))
+    if number =='y':
+        rpassword.append(random.choice(string.digits))
+    if punct =='y':
+        rpassword.append(random.choice(string.punctuation))
+
+    password_lengt = len(rpassword)
+
+    if password_lengt > size_u:
+        raise Exception("Üzgünüm ama bu şartları sağlayan bir password oluşturulamaz. Programı yeniden başlat")
 
     up = string.ascii_uppercase if upper_case == 'y' else ''
     low = string.ascii_lowercase if lower_case == 'y' else ''
     num = string.digits if number == 'y' else ''
     punc = string.punctuation if punct == 'y' else ''
 
-    charst = up + low + num + punc
+    charst= up + low+ num + punc
+
+    sizet =size_u - password_lengt
+
+
 
 
 
 
     def pass_generator(size= sizet, chars=charst):
-        print(''.join(random.choice(chars) for _ in range(size)))
         return ''.join(random.choice(chars) for _ in range(size))
 
     try:
-        generated_password = pass_generator()
+        generated_password =pass_generator()+"".join(str(x) for x in rpassword)
+        print(generated_password)
+
     except:
         print (" arkadaşım şifre dediğinde harf marf birşey olur... adam akıllı bir şey iste")
 
